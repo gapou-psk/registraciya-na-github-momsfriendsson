@@ -1,0 +1,76 @@
+CREATE TABLE transport (transport_id INT NOT NULL PRIMARY KEY IDENTITY,
+fuel_rate NUMERIC (3,2),
+engine_power NUMERIC (6,2),
+n_of_seats INT,
+req_category VARCHAR,
+brand VARCHAR(40),
+model VARCHAR(40),
+cost MONEY NOT NULL)
+
+CREATE TABLE staff (staff_id INT NOT NULL PRIMARY KEY IDENTITY,
+specialities NVARCHAR (60),
+salary MONEY)
+
+CREATE TABLE client (client_id INT NOT NULL PRIMARY KEY IDENTITY,
+surname NVARCHAR (60),
+[name] NVARCHAR (60),
+patronimic NVARCHAR (60),
+drivers_license VARCHAR)
+
+CREATE TABLE rental_point (point_id INT NOT NULL PRIMARY KEY IDENTITY,
+city NVARCHAR (60))
+
+CREATE TABLE point_staff (point_id INT NOT NULL ,
+staff_id INT NOT NULL)
+ 
+ CREATE TABLE point_transport (point_id INT NOT NULL ,
+transport_id INT NOT NULL)
+
+CREATE TABLE point_staff (point_id INT NOT NULL ,
+staff_id INT  NOT NULL)
+
+CREATE TABLE [transaction] (point_id INT NOT NULL ,
+client_id INT  NOT NULL,
+transport_id INT  NOT NULL)
+
+ALTER TABLE point_staff
+ADD CONSTRAINT K1
+FOREIGN KEY (point_id)
+REFERENCES rental_point (point_id)
+ON UPDATE CASCADE
+
+ALTER TABLE point_staff
+ADD CONSTRAINT K2
+FOREIGN KEY (staff_id)
+REFERENCES staff (staff_id)
+ON UPDATE CASCADE
+
+ALTER TABLE point_transport
+ADD CONSTRAINT K3
+FOREIGN KEY (point_id)
+REFERENCES rental_point (point_id)
+ON UPDATE CASCADE
+
+ALTER TABLE point_transport
+ADD CONSTRAINT K4
+FOREIGN KEY (transport_id)
+REFERENCES transport (transport_id)
+ON UPDATE CASCADE
+
+ALTER TABLE [transaction]
+ADD CONSTRAINT K5
+FOREIGN KEY (point_id)
+REFERENCES rental_point (point_id)
+ON UPDATE CASCADE
+
+ALTER TABLE [transaction]
+ADD CONSTRAINT K6
+FOREIGN KEY (client_id)
+REFERENCES client (client_id)
+ON UPDATE CASCADE
+
+ALTER TABLE [transaction]
+ADD CONSTRAINT K7
+FOREIGN KEY (transport_id)
+REFERENCES transport (transport_id)
+ON UPDATE CASCADE
