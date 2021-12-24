@@ -1,0 +1,116 @@
+1 çàäàíèå
+SELECT * FROM billing WHERE payer_email='vasya@mail.com'
+
+2 çàäàíèå
+USE billing;
+
+INSERT INTO billing(payer_email) VALUES ('pasha@mail.com');
+
+INSERT INTO billing(recipient_email) VALUES ('katya@mail.com');
+
+INSERT INTO billing(sum) VALUES ('300.00');
+
+INSERT INTO billing(currency) VALUES ('EUR');
+
+INSERT INTO billing(billing_date) VALUES ('14.02.2016');
+
+INSERT INTO billing(comment) VALUES ('Valentines day present');
+
+SELECT * FROM billing WHERE SUM=300;
+
+3 çàäàíèå 
+USE billing;
+
+UPDATE billing
+
+SET 
+payer_email='igor@mail.com'
+
+WHERE payer_email='alex@mail.com';
+4 çàäàíèå 
+USE billing;
+
+DELETE FROM billing
+
+WHERE payer_email= '' or recipient_email='';
+
+
+5 Задание
+USE project_simple;
+
+SELECT count(project_name) FROM project
+6 задание
+USE store_simple;
+SELECT category, count(category) FROM store GROUP BY category
+7 задание
+USE store_simple;
+
+SELECT category, count(category), Max(price) FROM store
+GROUP BY price
+ORDER by price desc
+LIMIT 5;
+
+8 задание
+USE project_simple;
+SELECT count(project_name), sum(budget), avg(datediff(project_start, project_finish)) FROM project
+
+
+
+USE store;
+SELECT category.name AS category_name , good.name AS good_name FROM category_has_good as chg
+INNER JOIN good
+ON good.id = chg.good_id
+INNER JOIN category
+ON category.id = chg.category_id
+ORDER BY good_name
+© 2021 GitHub, Inc.
+
+
+
+USE store;
+SELECT good.name AS good_name, category.name AS category_name FROM good 
+LEFT JOIN category
+ON category.id = good.id
+}}}}}}}
+USE store;
+SELECT good.name AS good_name, category.name  FROM good
+LEFT JOIN category
+ON category.id = good.id
+UNION ALL
+SELECT good.name, category.name  FROM good
+RIGHT JOIN category
+ON category.id = good.id
+WHERE good.name is NULL
+}}}}}}
+USE store;
+SELECT source.name, sale_sum FROM client
+LEFT JOIN sale
+ON sale.id = client.id
+INNER JOIN source
+ON sale.id = source.id
+
+
+
+Задача 1.Выбрать отдел в котором нет сотрудников.
+Задача 2.Выбрать отдел в котором работает больше 1 сотрудника.
+Задача 3.Выбрать сотрудников у которых нет отдела.
+
+1.
+SELECT departaments.name, users.name FROM departaments AS dept
+LEFT JOIN users
+ON users.d_id = dept.id
+WHERE d_id is NULL;
+
+
+2.
+SELECT departaments.name, COUNT (users.name) FROM departaments AS dept
+ JOIN users
+ON dept.id = users.d_id 
+WHERE COUNT(users.name)>1;
+
+
+3.
+SELECT departaments.name, users.name FROM departaments AS dept
+RIGHT JOIN users
+ON dept.id = users.d_id 
+WHERE dept.name is NULL;
